@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "lojamotos2-49d5d": {
+      "hosting": {
+        "lojaMotos2": [
+          "lojamotos2-49d5d"
+        ]
+      }
+    }
+  }
+}
