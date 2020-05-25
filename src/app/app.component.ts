@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Produto } from './models/produto.model';
+import { Marca } from './models/marca.model';
 
 @Component({
   selector: 'app-root',
@@ -10,19 +12,9 @@ export class AppComponent implements OnInit {
 
   title = 'lojaMotos2';
 
-  constructor(private firestore: AngularFirestore){
-
+  constructor(){
   }
 
-  async ngOnInit(){
-    
-    const documento = await this.firestore.collection('testes')
-    .doc('e7YQ5744ygitYtigUKBq')
-    .get()
-    .toPromise();
-  }
-
-
-
+  async ngOnInit(){ }
 
 }
