@@ -1,6 +1,6 @@
-export class Marca{
+export class Cor{
     id: string;
-    nome: string;
+    cor: string;
     dataCadastro: Date;
     dataEdicao: Date;
 }

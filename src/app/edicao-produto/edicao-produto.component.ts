@@ -4,22 +4,25 @@ import { MarcaService } from '../services/marca.service';
 import { ProdutoService } from '../services/produto.service';
 import { Marca } from '../models/marca.model';
 import { Observable } from 'rxjs';
-import { Produto } from '../models/produto.model';
 import { CustomValidators } from '../validators/custom-validators';
-import { Categoria } from '../models/categoria.model';
 import { CategoriaService } from '../services/categoria.service';
-import { Cor } from '../models/cor';
+import { Categoria } from '../models/categoria.model';
 import { CorService } from '../services/cor.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Cor } from '../models/cor';
 import { Location } from '@angular/common';
-
+import { ActivatedRoute } from '@angular/router';
+import { Produto } from '../models/produto.model';
 
 @Component({
-  selector: 'app-cadastro-produto',
-  templateUrl: './cadastro-produto.component.html',
-  styleUrls: ['./cadastro-produto.component.scss']
+  selector: 'app-edicao-produto',
+  templateUrl: './edicao-produto.component.html',
+  styleUrls: ['./edicao-produto.component.scss']
 })
-export class CadastroProdutoComponent implements OnInit {
+export class EdicaoProdutoComponent implements OnInit {
+
+  idProduto: string;
+  produto: Produto;
 
   marcas: Observable<Marca[]>;
   categorias: Observable<Categoria[]>;
@@ -35,7 +38,6 @@ export class CadastroProdutoComponent implements OnInit {
     idCor: ['', Validators.required],
   });
 
-  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,13 +46,23 @@ export class CadastroProdutoComponent implements OnInit {
     private categoriaService: CategoriaService,
     private corService: CorService,
     private snackBar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private activedRoute: ActivatedRoute
   ) { }
     
-  ngOnInit(): void {
+  async ngOnInit(){
+
+    this.formulario.disable();
+    
     this.marcas = this.marcaService.getObservable();
     this.categorias = this.categoriaService.getObservable();
     this.cores = this.corService.getObservable();
+
+    this.idProduto = this.activedRoute.snapshot.paramMap.get('id');
+    this.produto = await this.produtoService.get(this.idProduto);
+
+    this.formulario.enable();
+
   }
 
   async submit() {
@@ -61,19 +73,29 @@ export class CadastroProdutoComponent implements OnInit {
 
     this.formulario.disable();
 
-    const novoProduto = this.formulario.value as Produto;
-    novoProduto.dataCadastro = new Date();
+    const produtoEditado = this.formulario.value as Produto;
+    produtoEditado.dataEdicao = new Date();
 
-    const produto = await this.produtoService.add(novoProduto);
+    const produto = await this.produtoService.update(this.idProduto, produtoEditado);
+
+        console.log('Um produto foi editado -------------------------');
+        console.log('produto:');
+        console.log(this.produto);
+        console.log('Campos atualizados:');
+        console.log(produtoEditado);
+
+    Object.assign(this.produto, produtoEditado);
 
     this.formulario.enable();
-    this.formGroupDirective.resetForm();
 
-    this.snackBar.open('Cadastro da Moto efetuado com sucesso!');
+    this.snackBar.open('Produto atualizado com sucesso!');
 
   }
 
   voltar(){
     this.location.back();
   }
+  
 }
+
+

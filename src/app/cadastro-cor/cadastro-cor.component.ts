@@ -1,26 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
-import { MarcaService } from '../services/marca.service';
-import { Marca } from '../models/marca.model';
+import { Validators, FormGroupDirective, FormBuilder } from '@angular/forms';
+import { CorService } from '../services/cor.service';
+import { Cor } from '../models/cor';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-cadastro-marca',
-  templateUrl: './cadastro-marca.component.html',
-  styleUrls: ['./cadastro-marca.component.scss']
+  selector: 'app-cadastro-cor',
+  templateUrl: './cadastro-cor.component.html',
+  styleUrls: ['./cadastro-cor.component.scss']
 })
-export class CadastroMarcaComponent implements OnInit {
+export class CadastroCorComponent implements OnInit {
 
   formulario = this.formBuilder.group({
-    nome  : ['', Validators.required]
+    nome: ['', Validators.required]
   });
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
   constructor(
     private formBuilder: FormBuilder,
-    private marcaService: MarcaService,
+    private corService: CorService,
     private snackBar: MatSnackBar,
     private location: Location
     ) {
@@ -39,20 +39,21 @@ export class CadastroMarcaComponent implements OnInit {
 
     this.formulario.disable();
 
-    const novaMarca = this.formulario.value as Marca;
-    novaMarca.dataCadastro = new Date();
+    const novaCor = this.formulario.value as Cor;
+    novaCor.dataCadastro = new Date();
 
-    const marca = await this.marcaService.add(novaMarca);
+    const cor = await this.corService.add(novaCor);
 
     this.formulario.enable();
     this.formGroupDirective.resetForm();
 
-    this.snackBar.open('Cadastro da Marca efetuado com sucesso!');
+    this.snackBar.open('Cadastro da Cor efetuado com sucesso!');
 
   }
 
   voltar(){
     this.location.back();
   }
+
 
 }

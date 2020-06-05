@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MarcaService } from '../services/marca.service';
 import { Marca } from '../models/marca.model';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edicao-marca',
@@ -11,40 +13,60 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EdicaoMarcaComponent implements OnInit {
 
+  idMarca: string;
   marca: Marca;
 
   formulario = this.formBuilder.group({
     nome  : ['', Validators.required]
   });
 
-  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
-
+  
   constructor(
     private formBuilder: FormBuilder,
     private marcaService: MarcaService,
+    private snackBar: MatSnackBar,
+    private location: Location,
     private activedRoute: ActivatedRoute
-    ) { }
+    ) {
+
+   }
   
 
   async ngOnInit(){
-    const id = this.activedRoute.snapshot.paramMap.get('id');
-    this.marca = await this.marcaService.get(id);
+
+    this.formulario.disable();
+    
+    this.idMarca = this.activedRoute.snapshot.paramMap.get('id');
+    this.marca = await this.marcaService.get(this.idMarca);
+
+    this.formulario.enable();
+
   }
 
   async submit() {
 
-    if (!this.formulario.valid) {
+    if(!this.formulario.valid){
       return;
     }
 
     this.formulario.disable();
 
-    // const marca = this.formulario.value as Marca;
-    // const marcaRetorno = await this.marcaService.add(marca);
+    const marcaEditado = this.formulario.value as Marca;
+    marcaEditado.dataEdicao = new Date();
+
+    const marca = await this.marcaService.update(this.idMarca, marcaEditado);
+
+    Object.assign(this.marca, marcaEditado);
 
     this.formulario.enable();
-    this.formGroupDirective.resetForm();
+
+    this.snackBar.open('Marca atualizado com sucesso!');
 
   }
+
+  voltar(){
+    this.location.back();
+  }
+
 
 }

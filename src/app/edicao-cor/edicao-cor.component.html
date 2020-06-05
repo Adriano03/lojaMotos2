@@ -7,14 +7,14 @@
           <mat-icon>motorcycle</mat-icon>
         </div>
         
-        <mat-card-title>Marca</mat-card-title>
-        <mat-card-subtitle *ngIf="marca">
-          Cadastrado em  {{marca.dataCadastro | date:'short'}}.
-          <span *ngIf="marca.dataEdicao">
-            Ultima edição feita em {{marca.dataEdicao  | date: 'short'}}
-          </span>
-        </mat-card-subtitle>
-          
+        <mat-card-title>Cor</mat-card-title>
+        <mat-card-subtitle *ngIf="cor">
+            Cadastrado em  {{cor.dataCadastro | date:'short'}}.
+            <span *ngIf="cor.dataEdicao">
+              Ultima edição feita em {{cor.dataEdicao  | date: 'short'}}
+            </span>
+          </mat-card-subtitle>
+  
       </mat-card-header>
   
       <mat-card-content>

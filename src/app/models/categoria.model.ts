@@ -1,6 +1,6 @@
-export class Marca{
+export class Categoria{
     id: string;
-    nome: string;
+    categoria: string;
     dataCadastro: Date;
     dataEdicao: Date;
 }

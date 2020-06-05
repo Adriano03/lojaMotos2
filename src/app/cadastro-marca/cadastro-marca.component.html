@@ -4,7 +4,7 @@
     <mat-card-header>
 
       <div mat-card-avatar class="avatar" fxLayout fxLayoutAlign="center center">
-        <mat-icon>palette</mat-icon>
+        <mat-icon>motorcycle</mat-icon>
       </div>
       
       <mat-card-title>Marca</mat-card-title>
@@ -26,7 +26,7 @@
 
       <div fxLayout="row">
 
-        <button mat-button color="accent" class="uppercase" type="button" [disabled]="formulario.disabled">
+        <button mat-button color="accent" class="uppercase" type="button" [disabled]="formulario.disabled" (click)="voltar()">
           Voltar
         </button>
 
