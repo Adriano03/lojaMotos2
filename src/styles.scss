@@ -22,6 +22,31 @@ body {
      margin: 0;
      font-family: Roboto, "Helvetica Neue", sans-serif;
      }
+     
+
+     .container-formulario {
+        padding: 16px;
+    
+        mat-card {
+            max-width: 960px;
+            margin: auto;
+    
+        }
+    
+        .spinner-container {
+            margin: auto;
+            margin-right: 8px;
+        }
+    
+        .uppercase {
+            text-transform: uppercase;
+        }
+    
+        .conteudo {
+            max-width: 960px;
+            margin: auto;
+        }
+    }
 
      form {
         padding: 16px;
@@ -45,6 +70,11 @@ body {
             max-width: 960px;
             margin: auto;
         }
+    }
+
+    .mat-snack-bar-container {
+        background-color: #4caf50;
+        min-width: auto !important;
     }
 
 

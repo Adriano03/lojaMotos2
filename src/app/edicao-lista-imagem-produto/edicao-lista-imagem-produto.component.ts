@@ -47,11 +47,11 @@ export class EdicaoListaImagemProdutoComponent implements OnInit {
 
   }
 
-  adicionarImagens(event: any){
+  adicionarImagens(event: any) {
 
     const arquivos = event.target.files as FileList;
 
-    for(let index = 0; index < arquivos.length; index++){
+    for (let index = 0; index < arquivos.length; index++) {
 
       const arquivo = arquivos[index];
 
@@ -60,13 +60,25 @@ export class EdicaoListaImagemProdutoComponent implements OnInit {
     }
   }
 
-  async atualizarImagens(){
+  imagemEnviada() {
+    this.atualizarImagens();
+  }
+
+  excluirImagem(imagem: Imagem) {
+
+    const indice = this.imagens.indexOf(imagem);
+    this.imagens.splice(indice, 1);
+
+    this.atualizarImagens();
+
+  }
+
+  async atualizarImagens() {
 
     const imagensProduto = this.imagens.filter(x => x.url).map(x => x.url);
-    const produto = {imagens: imagensProduto} as Produto;
+    const produto = { imagens: imagensProduto } as Produto;
 
     await this.produtoService.update(this.idProduto, produto);
 
   }
-
 }

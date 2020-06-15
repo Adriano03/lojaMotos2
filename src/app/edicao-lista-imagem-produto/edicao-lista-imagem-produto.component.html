@@ -22,7 +22,7 @@
             </div>
 
             <app-edicao-imagem-produto *ngFor="let imagem of imagens" [imagem]="imagem" [idProduto]="idProduto"
-                (fileUploded)="atualizarImagens()">
+                (fileUploded)="imagemEnviada()" (fileDeleted)="excluirImagem($event)">
             </app-edicao-imagem-produto>
 
         </mat-card-content>

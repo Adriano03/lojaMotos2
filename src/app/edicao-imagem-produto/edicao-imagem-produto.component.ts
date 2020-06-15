@@ -12,13 +12,11 @@ import { AngularFireUploadTask, AngularFireStorageReference, AngularFireStorage 
 export class EdicaoImagemProdutoComponent implements OnInit, OnDestroy {
 
   @Input() imagem: Imagem;
-
-  // @Input() url: string;
-  // @Input() arquivo: File;
-
   @Input() idProduto: string;
 
+
   @Output() fileUploded: EventEmitter<Imagem> = new EventEmitter();
+  @Output() fileDeleted: EventEmitter<Imagem> = new EventEmitter();
 
   enviando: boolean;
   carregando: boolean;
@@ -37,7 +35,7 @@ export class EdicaoImagemProdutoComponent implements OnInit, OnDestroy {
     if (this.imagem.url) {
 
       this.carregando = true;
-
+      
     } else {
 
       if (!this.imagem.arquivo) {
@@ -50,7 +48,7 @@ export class EdicaoImagemProdutoComponent implements OnInit, OnDestroy {
 
       this.fileReference = this.fireStorage.ref(nome);
       this.uploadTask = this.fireStorage.upload(nome, this.imagem.arquivo);
-      
+
 
       this.percentageChangesSubscription = this.uploadTask.percentageChanges()
         .subscribe(x => {
@@ -68,9 +66,12 @@ export class EdicaoImagemProdutoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
 
-    this.uploadTask.cancel();
+    if(this.uploadTask){
+      this.uploadTask.cancel();
+    }
+    
 
-    if (this.percentageChangesSubscription){
+    if (this.percentageChangesSubscription) {
       this.percentageChangesSubscription.unsubscribe();
     }
 
@@ -80,7 +81,7 @@ export class EdicaoImagemProdutoComponent implements OnInit, OnDestroy {
 
   }
 
-  private async uploadFinalizado(){
+  private async uploadFinalizado() {
 
     this.enviando = false;
     this.carregando = true;
@@ -93,8 +94,19 @@ export class EdicaoImagemProdutoComponent implements OnInit, OnDestroy {
 
   }
 
-  imagemCarregada(){
+  imagemCarregada() {
     this.carregando = false;
+  }
+
+  async excluirImagem(){
+    
+    const fileRef = this.fireStorage.storage.refFromURL(this.imagem.url);
+    await fileRef.delete();
+
+    this.imagem.url = null;
+
+    this.fileDeleted.emit(this.imagem);
+
   }
 
 }
