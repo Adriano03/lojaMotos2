@@ -12,28 +12,38 @@ import { EdicaoListaImagemProdutoComponent } from './edicao-lista-imagem-produto
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { CadastroUsuarioComponent } from './cadastro-usuario/cadastro-usuario.component';
+import { ProdutosComponent } from './produtos/produtos.component';
+import { AuthGuard } from './guards/auth.guard';
+import { CarrinhoComponent } from './carrinho/carrinho.component';
 
 
 const routes: Routes = [
-  
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
 
-  {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'usuario/cadastro', component: CadastroUsuarioComponent },
+  {
+    path: 'home', component: HomeComponent,
+    children: [
 
-  {path: 'usuario/cadastro', component: CadastroUsuarioComponent},
-  {path: 'marcas/cadastro', component: CadastroMarcaComponent},
-  {path: 'produtos/cadastro', component: CadastroProdutoComponent},
-  {path: 'categoria/cadastro', component: CadastroCategoriaComponent},
-  {path: 'cores/cadastro', component: CadastroCorComponent},
+      
+      { path: 'marcas/cadastro', component: CadastroMarcaComponent },
+      { path: 'produtos', component: ProdutosComponent },
+      { path: 'produtos/cadastro', component: CadastroProdutoComponent },
+      { path: 'categoria/cadastro', component: CadastroCategoriaComponent },
+      { path: 'cores/cadastro', component: CadastroCorComponent },
+      { path: 'carrinho', component: CarrinhoComponent, canActivate: [AuthGuard] },
+ 
+      { path: 'marcas/:id/edicao', component: EdicaoMarcaComponent, canActivate: [AuthGuard]},
+      { path: 'categorias/:id/edicao', component: EdicaoCategoriaComponent, canActivate: [AuthGuard]},
+      { path: 'cores/:id/edicao', component: EdicaoCorComponent, canActivate: [AuthGuard]},
 
-  {path: 'produtos/:id/edicao', component: EdicaoProdutoComponent},
-  {path: 'marcas/:id/edicao', component: EdicaoMarcaComponent},
-  {path: 'categorias/:id/edicao', component: EdicaoCategoriaComponent},
-  {path: 'cores/:id/edicao', component: EdicaoCorComponent},
+      { path: 'produtos/:id/edicao', component: EdicaoProdutoComponent},
+      { path: 'produtos/:id/edicao/imagens', component: EdicaoListaImagemProdutoComponent }
 
-  {path: 'produtos/:id/edicao/imagens', component: EdicaoListaImagemProdutoComponent}
-  
+    ]
+  },
+
 ];
 
 @NgModule({

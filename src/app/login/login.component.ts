@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
 
           const userCredential = await this.auth.signInWithEmailAndPassword(autenticacao.email, autenticacao.senha);
           this.router.navigate(['home']);
-          console.log("Autenticado");
 
         } catch (error) {
 

@@ -1,4 +1,4 @@
-<!-- <form class="container-formulario" (ngSubmit)="submit()" [formGroup]="formulario">
+<form class="container-formulario" (ngSubmit)="submit()" [formGroup]="formulario">
 
     <mat-card>
         <mat-card-header>
@@ -40,6 +40,9 @@
                     obrigatória</mat-error>
             </mat-form-field>
 
+            <mat-error *ngIf="usuarioJaCadastrado">Usuário já cadastrado</mat-error>
+
+
         </mat-card-content>
 
         <mat-card-actions>
@@ -72,4 +75,4 @@
 
     </mat-card>
 
-</form> -->
+</form>
