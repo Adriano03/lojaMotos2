@@ -55,7 +55,7 @@ export class ProdutosComponent implements OnInit {
     if (this.usuario && this.usuario.permissao === 'admin') {
       return true;
     } else {
-      return true;
+      return false;
     }
   }
 

@@ -36,7 +36,7 @@ const routes: Routes = [
       { path: 'carrinho', component: CarrinhoComponent, canActivate: [AuthGuard] },
  
       { path: 'marcas/:id/edicao', component: EdicaoMarcaComponent, canActivate: [AdminGuard]},
-      { path: 'categorias/:id/edicao', component: EdicaoCategoriaComponent, },
+      { path: 'categorias/:id/edicao', component: EdicaoCategoriaComponent, canActivate: [AdminGuard]},
       { path: 'cores/:id/edicao', component: EdicaoCorComponent, canActivate: [AdminGuard]},
 
       { path: 'produtos/:id/edicao', component: EdicaoProdutoComponent},
