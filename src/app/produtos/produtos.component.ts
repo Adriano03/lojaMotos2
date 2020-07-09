@@ -12,6 +12,8 @@ import { Usuario } from '../models/usuario.model';
 import { UsuariosService } from '../services/usuarios.service';
 import { Router } from '@angular/router';
 import { Produto } from '../models/produto.model';
+import { MatDialog } from '@angular/material/dialog';
+import { CaixaMensagemComponent, Mensagem } from '../caixa-mensagem/caixa-mensagem.component';
 
 @Component({
   selector: 'app-produtos',
@@ -33,7 +35,8 @@ export class ProdutosComponent implements OnInit {
     private categoriaService: CategoriaService,
     private corService: CorService,
     private snackBar: MatSnackBar,
-    private usuarioService: UsuariosService
+    private usuarioService: UsuariosService,
+    private dialog: MatDialog
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -52,12 +55,27 @@ export class ProdutosComponent implements OnInit {
     if (this.usuario && this.usuario.permissao === 'admin') {
       return true;
     } else {
-      return false;
+      return true;
     }
   }
 
   editarMarca(marca: Marca){
     this.router.navigate([`/home/marcas/${marca.id}/edicao`]);
+  }
+
+  teste(){
+
+    const mensagem = new Mensagem();
+    mensagem.titulo = 'Atenção';
+    mensagem.texto = 'Tem certeza que deseja fazer a ação?';
+    mensagem.acoes = ['SIM', 'NÃO'];
+
+    const dialogoRef = this.dialog.open(CaixaMensagemComponent, { data: mensagem, disableClose: true});
+
+    dialogoRef.afterClosed().subscribe(resposta => {
+      console.log(resposta);
+    });
+
   }
 
 }

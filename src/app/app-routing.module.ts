@@ -15,6 +15,7 @@ import { CadastroUsuarioComponent } from './cadastro-usuario/cadastro-usuario.co
 import { ProdutosComponent } from './produtos/produtos.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CarrinhoComponent } from './carrinho/carrinho.component';
+import { AdminGuard } from './guards/admin.guard';
 
 
 const routes: Routes = [
@@ -34,9 +35,9 @@ const routes: Routes = [
       { path: 'cores/cadastro', component: CadastroCorComponent },
       { path: 'carrinho', component: CarrinhoComponent, canActivate: [AuthGuard] },
  
-      { path: 'marcas/:id/edicao', component: EdicaoMarcaComponent, canActivate: [AuthGuard]},
-      { path: 'categorias/:id/edicao', component: EdicaoCategoriaComponent, canActivate: [AuthGuard]},
-      { path: 'cores/:id/edicao', component: EdicaoCorComponent, canActivate: [AuthGuard]},
+      { path: 'marcas/:id/edicao', component: EdicaoMarcaComponent, canActivate: [AdminGuard]},
+      { path: 'categorias/:id/edicao', component: EdicaoCategoriaComponent, },
+      { path: 'cores/:id/edicao', component: EdicaoCorComponent, canActivate: [AdminGuard]},
 
       { path: 'produtos/:id/edicao', component: EdicaoProdutoComponent},
       { path: 'produtos/:id/edicao/imagens', component: EdicaoListaImagemProdutoComponent }
